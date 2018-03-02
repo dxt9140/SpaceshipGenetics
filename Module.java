@@ -9,7 +9,7 @@ public abstract class Module {
 
     private int size;
 
-    public Module( size ) {
+    public Module( int size ) {
         this.size = size;
     }
 

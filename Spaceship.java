@@ -8,12 +8,12 @@ creating random spaceships using a standard encoding.
 
 public class Spaceship {		
 
-    private Chassis chassis;
-    private Engine engine;
-    private Shield shield;
-    private Weapons weapons;
-    private CargoHold hold;
-    private Armor armor;
+    public Chassis chassis;
+    public Engine engine;
+    public Shield shield;
+    public Weapons weapons;
+    public CargoHold hold;
+    public Armor armor;
 
     public Spaceship( Chassis chassis, Engine engine, Shield shield,
         Weapons weapons, CargoHold hold, Armor armor ) {
