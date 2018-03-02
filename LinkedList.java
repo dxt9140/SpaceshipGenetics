@@ -7,52 +7,92 @@ Simple LinkedList implementation.
 
 import java.lang.IndexOutOfBoundsException;
 
-public class LinkedList {
+public class LinkedList<E> {
 
-    Node root = null;
-    Node tail = null;
+    private static class Node<E> {
+
+        private Node prev;
+        private E val;
+        private Node next;
+
+        private Node( E val ) {
+            this.val = val;
+            this.prev = null;
+            this.next = null;
+        }
+
+        public Node getNext() {
+            return this.next;
+        }
+
+        public Node getPrev() {
+            return this.prev;
+        }
+
+        public void setNext( Node next ) {
+            this.next = next;
+        }
+
+        public void setPrev( Node prev ) {
+            this.prev = prev;
+        }
+
+    }
+
+    private Node<E> root = null;
+    private Node<E> tail = null;
 
     public LinkedList() {
     }
 
-    public void append( Node node ) {
+    public void append( E val ) {
+        Node<E> node = new Node<E>( val );
+
         if ( this.root == null ) {
             this.root = node;
             this.tail = node;
-            node.prev = null;
-            node.next = null;
+            node.setPrev( null );
+            node.setNext( null );
         } else {
             Node consider = this.root;
-            while( consider.next != null ) {
-                consider = consider.next;
+            while( consider.getNext() != null ) {
+                consider = consider.getNext();
             }
 
-            consider.next = node;
-            node.next = null;
-            node.prev = consider;
+            consider.setNext( node );
+            node.setNext( null );
+            node.setPrev( consider );
         }
         
     }
 
-    public void insert( Node node, int index ) {
+    public void insert( E val, int index ) {
+        Node<E> node = new Node<E>( val );
         Node consider = this.root;
         int hops = 0;
 
         try {
 
-            while ( consider.next != null && hops != index ) {
-                if ( consider.next == null ) {
+            while ( consider != null && hops != index ) {
+                if ( consider == null ) {
                     throw new IndexOutOfBoundsException();
                 }
 
-                consider = consider.next;
+                consider = consider.getNext();
                 hops++;
             }
 
-            Node temp = consider.next;
-            consider.next = node;
-            node.prev = consider;
-            node.next = temp;
+            Node temp = consider.getPrev();
+            node.setPrev( temp );
+            consider.setPrev( node );
+            node.setNext( consider );
+
+            while ( this.root.getPrev() != null ) {
+                this.root = this.root.getPrev();
+            }
+            while ( this.tail.getNext() != null ) {
+                this.tail = this.tail.getNext();
+            }
 
         } catch ( IndexOutOfBoundsException exc ) {
             System.err.println("Index out of bounds.");
@@ -61,8 +101,24 @@ public class LinkedList {
 
     }
 
+    public Node getRoot() {
+        return this.root;
+    }
+
     public static void main( String[] args ) {
 
+        LinkedList<Integer> intList = new LinkedList<Integer>();
+        
+        intList.append( 8 );
+        intList.append( 7 );
+        intList.insert( 4, 1 );
+
+        Node n = intList.getRoot();
+        while ( n != null ) {
+            System.out.print( n.val + " " );
+            n = n.next;
+        }
+        System.out.println();
     }
 
 }
