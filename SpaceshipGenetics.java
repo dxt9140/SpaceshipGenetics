@@ -6,10 +6,14 @@ Main class to run the SpaceshipGenetics program. This class asks for input and
 handles arguments.
 **/
 
+import java.lang.NumberFormatException;
+
 public class SpaceshipGenetics {
 
     private static final String encodingMessage =
         "Encoding format: CxExHxSxAxWx where each x is a number from 1-3";
+
+    public static final int MAX_SHIPS = 12;
 
     public static void main( String[] args ) {
 
@@ -17,23 +21,45 @@ public class SpaceshipGenetics {
             usage();
         }
 
+        int numShips = MAX_SHIPS;
+        try {
+            numShips = Integer.parseInt( args[0] );
+            if ( numShips > MAX_SHIPS ) {
+                usage(); 
+            }
+
+        } catch ( NumberFormatException exc ) {
+            usage();
+        }
+
         Encoder encoder = new Encoder();
 
-        Spaceship[] ships = new Spaceship[ args.length ];
-        for ( int i = 0; i < args.length; i++ ) {
+        int count = 0;
+        Spaceship[] ships = new Spaceship[ numShips ];
+        for ( int i = 1; i < args.length; i++ ) {
             String string = args[i];
             if ( encoder.verifyEncoding( string ) ) {
-                ships[i] = encoder.stringToShip( string );
-                System.out.println( encoder.shipToString( ships[i] ) );
+                ships[count] = encoder.stringToShip( string );
+                System.out.println( encoder.shipToString( ships[count] ) );
+                count++;
             } else {
                 encodingError( args[i] ); 
             }
         }
 
+        while ( count != numShips ) {
+            Spaceship ship = Spaceship.randomShip();
+            ships[count] = ship;
+            System.out.println( encoder.shipToString( ship ) );
+            count++;
+        }
+
     }
 
     private static void usage() {
-        System.err.println( "Usage: java SpaceshipGenetics [encoding]" );
+        System.err.println( "Usage: java n SpaceshipGenetics [encoding]" );
+        System.err.println( "Usage: n in the number of ships to generate, must"
+            + " not be greater than " + MAX_SHIPS + " ." );
         System.err.println( encodingMessage );
         System.exit(-1);
     }
