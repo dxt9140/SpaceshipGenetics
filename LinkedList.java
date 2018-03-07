@@ -210,6 +210,20 @@ public class LinkedList<E> {
         intList.printLinkedList();
         System.out.println( "(" + removed_3 + ")" );
 
+        LinkedList<Spaceship> shipList = new LinkedList<Spaceship>();
+    
+        shipList.append( Spaceship.randomShip() );
+        shipList.printLinkedList();
+  
+        shipList.append( Spaceship.randomShip() );
+        shipList.printLinkedList();
+
+        shipList.insert( Spaceship.randomShip(), 1 );
+        shipList.printLinkedList();
+
+        shipList.remove( 1 );
+        shipList.printLinkedList();
+
     }
 
 }

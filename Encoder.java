@@ -8,7 +8,7 @@ versa.
 
 public class Encoder {
 
-    Spaceship stringToShip( String encoding ) {
+    static Spaceship stringToShip( String encoding ) {
 
         char chassisChar = encoding.charAt( 1 );
 	int chassisSize = Integer.parseInt( Character.toString( chassisChar ) );
@@ -41,7 +41,7 @@ public class Encoder {
 
     }
 
-    String shipToString( Spaceship ship ) {
+    static String shipToString( Spaceship ship ) {
 
         String encoding = new String();
 	
@@ -56,7 +56,7 @@ public class Encoder {
 
     }
 
-    boolean verifyEncoding( String encoding ) {
+    static boolean verifyEncoding( String encoding ) {
         if ( encoding.length() < 12 ) {
             System.out.println("a");
             System.out.println( encoding.length() );

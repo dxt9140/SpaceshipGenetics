@@ -61,8 +61,13 @@ public class Spaceship {
 
     }
 
-    public static void main( String[] args ) {
+    public String toString() {
+        return new Encoder().shipToString( this );
+    }
 
+    public static void main( String[] args ) {
+        Spaceship ship = Spaceship.randomShip();
+        System.out.println( ship );
     }
 
 }

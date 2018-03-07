@@ -32,15 +32,13 @@ public class SpaceshipGenetics {
             usage();
         }
 
-        Encoder encoder = new Encoder();
-
         int count = 0;
         Spaceship[] ships = new Spaceship[ numShips ];
         for ( int i = 1; i < args.length; i++ ) {
             String string = args[i];
-            if ( encoder.verifyEncoding( string ) ) {
-                ships[count] = encoder.stringToShip( string );
-                System.out.println( encoder.shipToString( ships[count] ) );
+            if ( Encoder.verifyEncoding( string ) ) {
+                ships[count] = Encoder.stringToShip( string );
+                System.out.println( Encoder.shipToString( ships[count] ) );
                 count++;
             } else {
                 encodingError( args[i] ); 
@@ -50,7 +48,7 @@ public class SpaceshipGenetics {
         while ( count != numShips ) {
             Spaceship ship = Spaceship.randomShip();
             ships[count] = ship;
-            System.out.println( encoder.shipToString( ship ) );
+            System.out.println( Encoder.shipToString( ship ) );
             count++;
         }
 
