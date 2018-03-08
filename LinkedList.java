@@ -37,6 +37,10 @@ public class LinkedList<E> {
             this.prev = prev;
         }
 
+        public E getVal() {
+            return this.val;
+        }
+
     }
 
     private Node<E> root = null;
@@ -48,14 +52,14 @@ public class LinkedList<E> {
     public void append( E val ) {
         Node<E> node = new Node<E>( val );
 
-        if ( this.getRoot() == null ) {
+        if ( this.getRootNode() == null ) {
 
             this.root = node;
             this.tail = node;
 
         } else {
 
-            Node<E> consider = this.getRoot();
+            Node<E> consider = this.getRootNode();
             while( consider.getNext() != null ) {
                 consider = consider.getNext();
             }
@@ -75,7 +79,7 @@ public class LinkedList<E> {
         }
 
         Node<E> node = new Node<E>( val );
-        Node<E> consider = this.getRoot();
+        Node<E> consider = this.getRootNode();
         int hops = 0;
 
         try {
@@ -112,7 +116,7 @@ public class LinkedList<E> {
 
     public void prepend( E val ) {
         Node<E> node = new Node<E>( val );
-        Node<E> root = this.getRoot();
+        Node<E> root = this.getRootNode();
         node.setNext( root );
         root.setPrev( node );
 
@@ -124,13 +128,13 @@ public class LinkedList<E> {
         try {
 
             if ( index == 0 ) {
-                Node<E> node = this.getRoot();
+                Node<E> node = this.getRootNode();
                 this.root = node.getNext();
                 this.root.setPrev( null );
                 return node.val;
             }
 
-            Node<E> consider = this.getRoot();
+            Node<E> consider = this.getRootNode();
             int hops = 0;
             while ( hops != index ) {
                 if ( consider == null ) {
@@ -163,12 +167,16 @@ public class LinkedList<E> {
 
     }
 
-    public Node<E> getRoot() {
+    private Node<E> getRootNode() {
         return this.root;
     }
 
+    public E getRoot() {
+        return this.getRootNode().getVal();
+    }
+
     public void printLinkedList() {
-        Node<E> n = this.getRoot();
+        Node<E> n = this.getRootNode();
         while ( n != null ) {
             System.out.print( n.val + " " );
             n = n.next;

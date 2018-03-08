@@ -11,9 +11,14 @@ import java.lang.NumberFormatException;
 public class SpaceshipGenetics {
 
     private static final String encodingMessage =
-        "Encoding format: CxExHxSxAxWx where each x is a number from 1-3";
+        "Encoding format: CxExHxSxAxWx where each x is a number from 1-"
+        + SpaceshipGenetics.MAX_MODULE_SIZE + ".";
 
     public static final int MAX_SHIPS = 12;
+
+    public static final int MAX_MODULE_SIZE = 5;
+
+    public static final int MAX_CHASSIS_SIZE = 3;
 
     public static void main( String[] args ) {
 

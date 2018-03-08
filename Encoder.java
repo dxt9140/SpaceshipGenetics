@@ -78,7 +78,6 @@ public class Encoder {
                         continue;
 
                     default:
-                        System.out.println("b");
                         return false;
                 }
 
@@ -86,8 +85,7 @@ public class Encoder {
            
                 char numChar = encoding.charAt( i ); 
                 int number = Integer.parseInt( Character.toString( numChar ) );
-                if ( number < 1 || number > 3 ) {
-                    System.out.println("c");
+                if ( number < 1 || number > SpaceshipGenetics.MAX_MODULE_SIZE ) {
                     return false;
                 }
 
