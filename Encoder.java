@@ -8,6 +8,13 @@ versa.
 
 public class Encoder {
 
+    /**
+     * Given an encoding of a Spaceship, return a Spaceship instance.
+     * Parameters:
+     *     encoding - The string representation of the ship.
+     * Preconidtions:
+     *     The encoding should have been verified by verifyEncoding()
+    **/
     static Spaceship stringToShip( String encoding ) {
 
         char chassisChar = encoding.charAt( 1 );
@@ -41,6 +48,11 @@ public class Encoder {
 
     }
 
+    /**
+     * Given a ship instance, encode it into a string. Useful for printing.
+     * Parameters:
+     *     ship - The Spaceship object to encode
+    **/
     static String shipToString( Spaceship ship ) {
 
         String encoding = new String();
@@ -56,6 +68,12 @@ public class Encoder {
 
     }
 
+    /**
+     * Verify a string encoding. This method is more of a skeleton at the
+     *  moment, as it is not very accurate.
+     * Parameters:
+     *     encoding - The string to ensure matches a Spaceship profile.
+    **/
     static boolean verifyEncoding( String encoding ) {
         if ( encoding.length() < 12 ) {
             System.out.println("a");

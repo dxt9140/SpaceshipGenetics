@@ -7,48 +7,103 @@ Simple LinkedList implementation.
 
 import java.lang.IndexOutOfBoundsException;
 
+/**
+ * Declaration of the LinkedList class. Uses generics for flexibility.
+**/
 public class LinkedList<E> {
 
+    /**
+     * Private Node class for use by the LinkedList class. Should be opaque
+     *  to the user.
+    **/
     private static class Node<E> {
 
+        // Previous node in the list.
         private Node<E> prev;
+
+        // The generic value of the node.
         private E val;
+
+        // The node in the list.
         private Node<E> next;
 
+        /*
+         * Construct an instance of a node with a given value.
+         * Parameters:
+         *     val - Generic value of the node.
+        */
         private Node( E val ) {
             this.val = val;
             this.prev = null;
             this.next = null;
         }
 
+        /*
+         * Get the next node.
+        */
         public Node<E> getNext() {
             return this.next;
         }
 
+        /*
+         * Get the previous node.
+        */
         public Node<E> getPrev() {
             return this.prev;
         }
 
+        /*
+         * Set the next value of this node.
+         * Parameters:
+         *     next - The node to set as the next node.
+        */
         public void setNext( Node<E> next ) {
             this.next = next;
         }
 
+        /*
+         * Set the previous value of this node.
+         * Parameters:
+         *     prev - The node to set as the previous node.
+        */
         public void setPrev( Node<E> prev ) {
             this.prev = prev;
         }
 
+        /*
+         * Return the value of this node.
+        */
         public E getVal() {
             return this.val;
         }
 
+        /*
+         * Convert this node to a string.
+        */
+        public String toString() {
+            return this.val.toString();
+        }
+
     }
 
+    // The root value of this list. 
     private Node<E> root = null;
+  
+    // The tail value of this list.
     private Node<E> tail = null;
 
+    // The number of nodes in the list.
+    private int size = 0;
+
+    // Construct the list
     public LinkedList() {
     }
 
+    /**
+     * Add a value to the linked list. The value in encapsulated in a node.
+     * Parameters:
+     *     val - The generic value to add to the end of the list.
+    **/
     public void append( E val ) {
         Node<E> node = new Node<E>( val );
 
@@ -69,9 +124,16 @@ public class LinkedList<E> {
  
             this.tail = node;
         }
-        
+ 
+        this.size++;  
     }
 
+    /**
+     * Insert a value into a specific index of the list.
+     * Parameters:
+     *     val - The value to add to the list. Converted to a node.
+     *     index - The index location to add to the list.
+    **/
     public void insert( E val, int index ) {
         if ( index == 0 ) {
             this.prepend( val );
@@ -85,12 +147,12 @@ public class LinkedList<E> {
         try {
 
             while ( hops != index ) {
+                consider = consider.getNext();
+                hops++;
+
                 if ( consider == null ) {
                     throw new IndexOutOfBoundsException();
                 }
-
-                consider = consider.getNext();
-                hops++;
             }
 
             Node<E> temp = consider.getPrev();
@@ -112,8 +174,14 @@ public class LinkedList<E> {
             return;
         }
 
+        this.size++;
     }
 
+    /**
+     * Insert a value to the beginning of the list.
+     * Parameters:
+     *     val - The value to add to the beginning of the list.
+    **/
     public void prepend( E val ) {
         Node<E> node = new Node<E>( val );
         Node<E> root = this.getRootNode();
@@ -121,8 +189,16 @@ public class LinkedList<E> {
         root.setPrev( node );
 
         this.root = node;
+        this.size++;
     }
 
+    /**
+     * Remove the node at a particular index.
+     * Parameters:
+     *     index - The index of the location to remove the value from.
+     * Returns:
+     *     Returns the value of the node at index.
+    **/
     public E remove( int index ) {
 
         try {
@@ -155,7 +231,8 @@ public class LinkedList<E> {
             while ( this.tail.getNext() != null ) {
                 this.tail = this.tail.getNext();
             }
-
+ 
+            this.size--;
             return node.val;
 
         } catch ( IndexOutOfBoundsException exc ) {
@@ -167,14 +244,59 @@ public class LinkedList<E> {
 
     }
 
+    /**
+     * Obtain the value of the node at index. The node remains in the list.
+     * Parameters:
+     *     index - The index location to obtain the value.
+     * Returns:
+     *     Returns the value contained by the node at index.
+    **/
+    public E getElementAt( int index ) {
+        int hops = 0;
+        Node<E> consider = this.getRootNode();
+
+        try {
+            while ( hops != index ) {
+                consider = consider.getNext();
+                hops++;
+                if ( consider == null ) {
+                    throw new IndexOutOfBoundsException();
+                }
+            }
+        } catch ( Exception exc ) {
+            // System.err.println("Error: Error getting element at index " +
+            //    index + ".");
+            // System.err.println("Error: Index " + index + " out of bounds.");
+            return null;
+        }
+
+        return consider.getVal();
+    }
+
+    /**
+     * Obtain the root node of this list. Should not be available to the user.
+    **/
     private Node<E> getRootNode() {
         return this.root;
     }
 
+    /**
+     * Return the value of the root node.
+    **/
     public E getRoot() {
         return this.getRootNode().getVal();
     }
 
+    /**
+     * Return the size of this linked list.
+    **/
+    public int size() {
+        return this.size;
+    }
+
+    /**
+     * Print the linked list in a human-readable format.
+    **/
     public void printLinkedList() {
         Node<E> n = this.getRootNode();
         while ( n != null ) {
@@ -184,6 +306,9 @@ public class LinkedList<E> {
         System.out.println();
     }
 
+    /*
+     * Main class for unit testing.
+    */
     public static void main( String[] args ) {
 
         LinkedList<Integer> intList = new LinkedList<Integer>();

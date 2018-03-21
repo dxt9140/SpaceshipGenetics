@@ -7,6 +7,9 @@ Weapons class for Spaceship. Determines the firepower of a ship.
 
 public class Weapons extends Module {
 
+    /*
+     * Construct an instance of a Weapons object.
+    */
     public Weapons( int size ) {
         super( size );
     }

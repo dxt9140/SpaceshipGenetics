@@ -8,6 +8,9 @@ ship.
 
 public class Shield extends Module {
 
+    /*
+     * Construct a SHield module given the size.
+    */
     public Shield( int size ) {
         super( size );
     }
